@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吉他指板练习器</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .p-6 {
+      padding: 1.5rem;
+    }
+    .space-y-4 > * + * {
+      margin-top: 1rem;
+    }
+    .flex {
+      display: flex;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .justify-between {
+      justify-content: space-between;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+    .font-bold {
+      font-weight: 700;
+    }
+    .text-sm {
+      font-size: 0.875rem;
+    }
+    .opacity-80 {
+      opacity: 0.8;
+    }
+    .p-3 {
+      padding: 0.75rem;
+    }
+    .rounded {
+      border-radius: 0.25rem;
+    }
+    .border {
+      border: 1px solid #e2e8f0;
+    }
+    .bg-white {
+      background-color: white;
+    }
+    .text-lg {
+      font-size: 1.125rem;
+    }
+    .font-semibold {
+      font-weight: 600;
+    }
+    .ml-3 {
+      margin-left: 0.75rem;
+    }
+    .text-gray-500 {
+      color: #718096;
+    }
+    .text-gray-600 {
+      color: #4a5568;
+    }
+    .flex-wrap {
+      flex-wrap: wrap;
+    }
+    .gap-2 {
+      gap: 0.5rem;
+    }
+    .gap-3 {
+      gap: 0.75rem;
+    }
+    .px-3 {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .bg-blue-100 {
+      background-color: #ebf8ff;
+    }
+    .border-blue-400 {
+      border-color: #63b3ed;
+    }
+    .bg-blue-600 {
+      background-color: #3182ce;
+    }
+    .text-white {
+      color: white;
+    }
+    .bg-emerald-600 {
+      background-color: #059669;
+    }
+    .bg-emerald-200 {
+      background-color: #a7f3d0;
+    }
+    .border-emerald-500 {
+      border-color: #10b981;
+    }
+    .bg-rose-100 {
+      background-color: #ffe4e6;
+    }
+    .border-rose-400 {
+      border-color: #fb7185;
+    }
+    .border-gray-300 {
+      border-color: #e2e8f0;
+    }
+    .overflow-x-auto {
+      overflow-x: auto;
+    }
+    .inline-grid {
+      display: inline-grid;
+    }
+    .sticky {
+      position: sticky;
+    }
+    .left-0 {
+      left: 0;
+    }
+    .z-10 {
+      z-index: 10;
+    }
+    .pr-2 {
+      padding-right: 0.5rem;
+    }
+    .justify-end {
+      justify-content: flex-end;
+    }
+    .text-gray-700 {
+      color: #4a5568;
+    }
+    .h-12 {
+      height: 3rem;
+    }
+    .min-w-\[56px\] {
+      min-width: 56px;
+    }
+    .transition-colors {
+      transition-property: color, background-color, border-color;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+    }
+    .rounded-md {
+      border-radius: 0.375rem;
+    }
+    .m-0\.5 {
+      margin: 0.125rem;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .text-xs {
+      font-size: 0.75rem;
+    }
+    .border-emerald-400 {
+      border-color: #34d399;
+    }
+    .bg-emerald-50 {
+      background-color: #ecfdf5;
+    }
+    .border-rose-400 {
+      border-color: #fb7185;
+    }
+    .bg-rose-50 {
+      background-color: #fff1f2;
+    }
+    .mb-1 {
+      margin-bottom: 0.25rem;
+    }
+    .mt-1 {
+      margin-top: 0.25rem;
+    }
+    .grid {
+      display: grid;
+    }
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .gap-4 {
+      gap: 1rem;
+    }
+    .p-4 {
+      padding: 1rem;
+    }
+    .text-xl {
+      font-size: 1.25rem;
+    }
+    .mb-2 {
+      margin-bottom: 0.5rem;
+    }
+    .list-disc {
+      list-style-type: disc;
+    }
+    .pl-6 {
+      padding-left: 1.5rem;
+    }
+    .mt-4 {
+      margin-top: 1rem;
+    }
+    .cursor-pointer {
+      cursor: pointer;
+    }
+    .select-none {
+      user-select: none;
+    }
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+    .space-y-2 > * + * {
+      margin-top: 0.5rem;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    .fretboard-cell {
+      position: relative;
+    }
+    .fretboard-cell button {
+      width: 100%;
+      height: 100%;
+    }
+    details summary {
+      cursor: pointer;
+    }
+    
+    /* 升降符号样式 */
+    .note-with-accidental {
+      position: relative;
+      display: inline-block;
+    }
+    .accidental {
+      position: absolute;
+      font-size: 0.7em;
+      left: -0.4em;
+      top: -0.5em;
+    }
+    
+    /* 自适应样式 */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      .p-6 {
+        padding: 1rem;
+      }
+      .text-2xl {
+        font-size: 1.25rem;
+      }
+      .text-lg {
+        font-size: 1rem;
+      }
+      .grid-cols-2 {
+        grid-template-columns: 1fr;
+      }
+      .h-12 {
+        height: 2.5rem;
+      }
+      .min-w-\[56px\] {
+        min-width: 40px;
+      }
+      .flex {
+        flex-wrap: wrap;
+      }
+      .flex.items-center.justify-between {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .flex.items-center.justify-between > div {
+        margin-top: 0.5rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .p-6 {
+        padding: 0.75rem;
+      }
+      .p-3 {
+        padding: 0.5rem;
+      }
+      .h-12 {
+        height: 2rem;
+      }
+      .min-w-\[56px\] {
+        min-width: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="app">
+    <!-- 内容将通过JavaScript动态生成 -->
+  </div>
+
+  <script>
+    // 12 平均律音名（首选升号写法）
+    const NOTES_SHARP = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
+    const NOTES_FLAT  = ["C", "D♭", "D", "E♭", "E", "F", "G♭", "G", "A♭", "A", "B♭", "B"];
+
+    // 标准调弦（6 → 1）：E A D G B E
+    const TUNING = ["E", "A", "D", "G", "B", "E"];
+
+    // 大调调号选择（决定更偏向 # 还是 b 的拼写）
+    // sharp-leaning keys 与 flat-leaning keys
+    const SHARP_KEYS = ["C","G","D","A","E","B","F♯","C♯"];
+    const FLAT_KEYS  = ["F","B♭","E♭","A♭","D♭","G♭","C♭"];
+
+    // 获取音名 -> 音高索引（0=C ... 11=B）
+    function noteToIndex(name) {
+      const norm = name.trim().replace(/♯/g, "#").replace(/♭/g, "b").toUpperCase();
+      const idxSharp = NOTES_SHARP.map(n=>n.replace(/♯/g, "#").toUpperCase()).indexOf(norm);
+      if (idxSharp >= 0) return idxSharp;
+      const idxFlat  = NOTES_FLAT.map(n=>n.replace(/♭/g, "b").toUpperCase()).indexOf(norm);
+      if (idxFlat >= 0) return idxFlat;
+      throw new Error(`无法识别的音名: ${name}`);
+    }
+
+    function indexToName(idx, prefer = "sharp") {
+      const i = ((idx % 12) + 12) % 12;
+      return prefer === "flat" ? NOTES_FLAT[i] : NOTES_SHARP[i];
+    }
+
+    // 格式化音名显示，将升降符号放在左上角
+    function formatNoteName(name) {
+      if (name.includes('♯')) {
+        const [base] = name.split('♯');
+        return `<span class="note-with-accidental"><span class="accidental">♯</span>${base}</span>`;
+      } else if (name.includes('♭')) {
+        const [base] = name.split('♭');
+        return `<span class="note-with-accidental"><span class="accidental">♭</span>${base}</span>`;
+      }
+      return name;
+    }
+
+    // 计算某调（大调）主音索引
+    function keyToTonicIndex(key) {
+      return noteToIndex(key.replace("♯","#").replace("♭","b"));
+    }
+
+    // 大调度数到半音： 1 2 3 4 5 6 7 = 0 2 4 5 7 9 11
+    const MAJOR_DEGREE_SEMITONES = {1:0, 2:2, 3:4, 4:5, 5:7, 6:9, 7:11};
+
+    // 获取给定弦与品位的音高索引
+    function noteAt(stringIndex, fret) {
+      const openIdx = noteToIndex(TUNING[stringIndex]);
+      return (openIdx + fret + 120) % 12;
+    }
+
+    // 生成一道题：随机 Key 与 Degree
+    function makeQuestion() {
+      const allKeys = [...SHARP_KEYS, ...FLAT_KEYS];
+      const key = allKeys[Math.floor(Math.random() * allKeys.length)];
+      const degree = Math.floor(Math.random() * 7) + 1;
+      const tonic = keyToTonicIndex(key);
+      const targetIndex = (tonic + MAJOR_DEGREE_SEMITONES[degree]) % 12;
+      const prefer = FLAT_KEYS.includes(key) ? "flat" : "sharp";
+      return { key, degree, targetIndex, prefer };
+    }
+
+    // 集合工具
+    function setOfKeys(keys) { return new Set(keys); }
+    function sameSet(a, b) {
+      if (a.size !== b.size) return false;
+      for (const v of a) if (!b.has(v)) return false;
+      return true;
+    }
+
+    // 把 (string,fret) 转为键
+    const cellKey = (s, f) => `${s}-${f}`;
+
+    // 应用状态
+    const state = {
+      startFret: 1,
+      questionIndex: 0, // 0..9 共 10 题
+      question: makeQuestion(),
+      selectedNote: null,
+      selected: new Set(),
+      reveal: false,
+      history: [],
+      beginTime: Date.now()
+    };
+
+    // 随机起始品位（1–24）。若起始=1，渲染 0–5；否则渲染 [start, start+4]
+    function randomizeWindow() {
+      const s = Math.floor(Math.random() * 24) + 1; // 1..24（显示时会截断到 24）
+      state.startFret = s;
+    }
+
+    function getFretsToShow() {
+      if (state.startFret === 1) return [0,1,2,3,4,5];
+      const end = Math.min(state.startFret + 4, 24);
+      const arr = [];
+      for (let f = state.startFret; f <= end; f++) arr.push(f);
+      // 保证是 5 个格（除非已达 24，则数组可能 <5，但题意"不要超过24品"优先）
+      return arr;
+    }
+
+    function getCorrectCells() {
+      const fretsToShow = getFretsToShow();
+      const cells = [];
+      for (let s=0; s<6; s++) {
+        for (const f of fretsToShow) {
+          const idx = noteAt(s, f);
+          if (idx === state.question.targetIndex) cells.push(cellKey(s, f));
+        }
+      }
+      return setOfKeys(cells);
+    }
+
+    // ====== 交互 ======
+    function toggleCell(s, f) {
+      if (state.reveal) return; // 展示答案时不可再改
+      const k = cellKey(s, f);
+      if (state.selected.has(k)) {
+        state.selected.delete(k);
+      } else {
+        state.selected.add(k);
+      }
+      render();
+    }
+
+    function selectNote(index) {
+      if (state.reveal) return; // 展示答案时不可再改
+      state.selectedNote = index;
+      render();
+    }
+
+    function submit() {
+      const correctCells = getCorrectCells();
+      // 判断音名选择
+      const nameCorrect = state.selectedNote !== null && state.selectedNote === state.question.targetIndex;
+      // 判断指板选择
+      const posCorrect = sameSet(state.selected, correctCells);
+      const correct = nameCorrect && posCorrect;
+
+      const now = Date.now();
+      const used = now - state.beginTime;
+
+      const preferSpelling = state.question.prefer;
+      const targetName = indexToName(state.question.targetIndex, preferSpelling);
+
+      state.history.push({ 
+        correct, 
+        ms: used, 
+        q: state.question, 
+        detail: {
+          nameCorrect,
+          posCorrect,
+          userAnswer: state.selectedNote !== null ? indexToName(state.selectedNote) : '',
+          expectedName: targetName,
+          selected: Array.from(state.selected),
+          correct: Array.from(correctCells),
+          missed: Array.from(correctCells).filter(k => !state.selected.has(k)),
+          extra: Array.from(state.selected).filter(k => !correctCells.has(k)),
+        }
+      });
+
+      state.reveal = true;
+      render();
+    }
+
+    function nextQuestion() {
+      if (state.questionIndex >= 9) {
+        render(); // 10题结束，显示结果页
+        return;
+      }
+      state.questionIndex += 1;
+      state.question = makeQuestion();
+      randomizeWindow();
+      state.selectedNote = null;
+      state.selected = new Set();
+      state.reveal = false;
+      state.beginTime = Date.now();
+      render();
+    }
+
+    function restart() {
+      state.questionIndex = 0;
+      state.history = [];
+      state.question = makeQuestion();
+      randomizeWindow();
+      state.selectedNote = null;
+      state.selected = new Set();
+      state.reveal = false;
+      state.beginTime = Date.now();
+      render();
+    }
+
+    // 渲染函数
+    function render() {
+      const app = document.getElementById('app');
+      
+      // 结果页
+      if (state.history.length === 10) {
+        const totalMs = state.history.reduce((s, r) => s + r.ms, 0);
+        const correctCount = state.history.filter(r => r.correct).length;
+        const avgMs = Math.round(totalMs / state.history.length);
+
+        const topMistakes = (() => {
+          const missMap = new Map();
+          state.history.forEach(r => {
+            if (!r.correct) {
+              const expect = indexToName(r.q.targetIndex, r.q.prefer);
+              missMap.set(expect, (missMap.get(expect) ?? 0) + 1);
+            }
+          });
+          return [...missMap.entries()].sort((a,b)=>b[1]-a[1]).slice(0,3);
+        })();
+
+        app.innerHTML = `
+          <div class="p-6 space-y-4">
+            <h2 class="text-2xl font-bold">本轮结果</h2>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-4 rounded border bg-white">
+                <div class="text-sm text-gray-500">正确题数</div>
+                <div class="text-xl font-semibold">${correctCount} / 10</div>
+              </div>
+              <div class="p-4 rounded border bg-white">
+                <div class="text-sm text-gray-500">平均用时</div>
+                <div class="text-xl font-semibold">${(avgMs/1000).toFixed(1)} s</div>
+              </div>
+            </div>
+            ${topMistakes.length > 0 ? `
+              <div>
+                <h3 class="font-semibold mb-2">容易出错的音：</h3>
+                <ul class="list-disc pl-6">
+                  ${topMistakes.map(([name, n]) => `<li>${formatNoteName(name)}（错 ${n} 次）</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+            <button class="px-4 py-2 rounded bg-blue-600 text-white" onclick="restart()">再来一轮</button>
+            <details class="mt-4">
+              <summary class="cursor-pointer select-none">查看每题详情</summary>
+              <div class="mt-2 space-y-2">
+                ${state.history.map((h, i) => `
+                  <div class="p-3 rounded border">
+                    <div class="font-medium">第 ${i+1} 题：${formatNoteName(h.q.key)} 调的 ${h.q.degree} 级（目标：${formatNoteName(indexToName(h.q.targetIndex, h.q.prefer))}） — ${h.correct ? "✅ 正确" : "❌ 错误"}</div>
+                    ${!h.correct ? `
+                      <div class="text-sm opacity-80 mt-1">
+                        <div>音名判定：${h.detail.nameCorrect ? "正确" : `错误（你的答案：${formatNoteName(h.detail.userAnswer || '空')}；应为：${formatNoteName(h.detail.expectedName)}）`}</div>
+                        <div>位置判定：${h.detail.posCorrect ? "正确" : `
+                          <div>漏选：${h.detail.missed.join(", ") || "无"}</div>
+                          <div>多选：${h.detail.extra.join(", ") || "无"}</div>
+                        `}</div>
+                      </div>
+                    ` : ''}
+                  </div>
+                `).join('')}
+              </div>
+            </details>
+          </div>
+        `;
+        return;
+      }
+
+      // 练习页面
+      const fretsToShow = getFretsToShow();
+      const correctCells = getCorrectCells();
+      const preferSpelling = state.question.prefer;
+      const targetName = indexToName(state.question.targetIndex, preferSpelling);
+
+      app.innerHTML = `
+        <div class="p-6 space-y-4">
+          <header class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold">吉他指板练习器</h2>
+            <div class="text-sm opacity-80">第 ${state.questionIndex+1} / 10 题</div>
+          </header>
+
+          <div class="p-3 rounded border bg-white flex items-center justify-between">
+            <div class="text-lg">
+              题目：<span class="font-semibold">${formatNoteName(state.question.key)}</span> 调的 <span class="font-semibold">${state.question.degree}</span> 级
+              <span class="ml-3 text-gray-500">（选择音名并在指板中点选所有位置）</span>
+            </div>
+            <div class="text-sm text-gray-600">当前范围起始品：<span class="font-semibold">${state.startFret}</span></div>
+          </div>
+
+          <!-- 音名选择按钮 -->
+          <div class="flex flex-wrap gap-2">
+            ${NOTES_SHARP.map((note, idx) => {
+              const isSelected = state.selectedNote === idx;
+              const isCorrect = state.reveal && idx === state.question.targetIndex;
+              const isWrong = state.reveal && isSelected && idx !== state.question.targetIndex;
+              
+              let buttonClass = "px-3 py-2 rounded border";
+              if (state.reveal) {
+                if (isCorrect) buttonClass += " bg-emerald-200 border-emerald-500";
+                else if (isWrong) buttonClass += " bg-rose-100 border-rose-400";
+                else buttonClass += " bg-white border-gray-300";
+              } else {
+                buttonClass += isSelected ? " bg-blue-100 border-blue-400" : " bg-white border-gray-300";
+              }
+              
+              return `
+                <button
+                  class="${buttonClass}"
+                  onclick="selectNote(${idx})"
+                  ${state.reveal ? 'disabled' : ''}
+                >
+                  ${formatNoteName(note)}
+                </button>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="flex items-center gap-3">
+            ${!state.reveal ? `
+              <button class="px-4 py-2 rounded bg-blue-600 text-white" onclick="submit()">提交</button>
+            ` : `
+              <button class="px-4 py-2 rounded bg-emerald-600 text-white" onclick="nextQuestion()">
+                ${state.questionIndex === 9 ? "查看结果" : "下一题"}
+              </button>
+              <span class="text-sm">
+                正确音名：<b>${formatNoteName(targetName)}</b>
+              </span>
+            `}
+          </div>
+
+          <!-- 指板 -->
+          <div class="overflow-x-auto">
+            <div class="inline-grid" style="grid-template-columns: 64px repeat(${fretsToShow.length}, 1fr)">
+              <!-- 左侧弦号栏 -->
+              <div class="sticky left-0 bg-white z-10"></div>
+              ${fretsToShow.map((f, i) => `
+                <div class="px-2 py-1 text-center text-xs text-gray-600">${i===0 ? `${f} 品` : ''}</div>
+              `).join('')}
+
+              <!-- 反转弦的顺序，使1弦在最上方 -->
+              ${[...Array(6)].map((_, idx) => {
+                // 反转索引，使1弦(idx=5)在最上方，6弦(idx=0)在最下方
+                const sIdx = 5 - idx;
+                return `
+                  <!-- 弦标签 -->
+                  <div class="pr-2 flex items-center justify-end text-sm text-gray-700">${idx + 1} 弦</div>
+                  ${fretsToShow.map((f) => {
+                    const k = cellKey(sIdx, f);
+                    const chosen = state.selected.has(k);
+                    const isCorrectCell = correctCells.has(k);
+                    const isCorrectNote = noteAt(sIdx, f) === state.question.targetIndex;
+
+                    // 展示阶段：正确位置绿色，高亮；用户多选的错误位置标红边
+                    let revealCls = state.reveal
+                      ? isCorrectCell
+                        ? "bg-emerald-200 border-emerald-500"
+                        : (chosen ? "bg-rose-100 border-rose-400" : "bg-white border-gray-300")
+                      : (chosen ? "bg-blue-100 border-blue-400" : "bg-white border-gray-300");
+
+                    return `
+                      <button
+                        onclick="toggleCell(${sIdx}, ${f})"
+                        ${state.reveal ? 'disabled' : ''}
+                        class="h-12 min-w-[56px] border transition-colors rounded-md m-0.5 flex items-center justify-center ${revealCls}"
+                        title="弦${idx+1} 品${f}"
+                      >
+                        <!-- 做题阶段隐藏音名；揭示阶段显示音名 -->
+                        <span class="text-xs">${state.reveal ? formatNoteName(indexToName(noteAt(sIdx, f))) : (isCorrectNote && state.reveal ? formatNoteName(indexToName(state.question.targetIndex)) : "•")}</span>
+                      </button>
+                    `;
+                  }).join('')}
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <!-- 判题提示 -->
+          ${state.reveal ? (() => {
+            const nameOk = state.selectedNote !== null && state.selectedNote === state.question.targetIndex;
+            const missed = Array.from(correctCells).filter(k => !state.selected.has(k));
+            const extra = Array.from(state.selected).filter(k => !correctCells.has(k));
+            const allOk = nameOk && missed.length===0 && extra.length===0;
+
+            return `
+              <div class="p-3 rounded border ${allOk? 'border-emerald-400 bg-emerald-50' : 'border-rose-400 bg-rose-50'}">
+                <div class="font-semibold mb-1">${allOk ? '✅ 回答正确！' : '❌ 回答不完全正确'}</div>
+                ${!nameOk ? `
+                  <div>音名错误：你的答案「${state.selectedNote !== null ? formatNoteName(indexToName(state.selectedNote)) : '空'}」，应为「<b>${targetName}</b>」</div>
+                ` : ''}
+                ${(missed.length>0 || extra.length>0) ? `
+                  <div class="mt-1 text-sm">
+                    ${missed.length>0 ? `<div>漏选位置：${missed.join(', ')}</div>` : ''}
+                    ${extra.length>0 ? `<div>多选位置：${extra.join(', ')}</div>` : ''}
+                  </div>
+                ` : ''}
+              </div>
+            `;
+          })() : ''}
+
+          <footer class="text-xs text-gray-500">
+            小提示：如果范围包含第 1 品，会自动加入「空弦（0 品）」可选。
+          </footer>
+        </div>
+      `;
+    }
+
+    // 初始化
+    randomizeWindow();
+    render();
+
+    // 将函数暴露到全局作用域
+    window.toggleCell = toggleCell;
+    window.selectNote = selectNote;
+    window.submit = submit;
+    window.nextQuestion = nextQuestion;
+    window.restart = restart;
+  </script>
+</body>
+</html>
